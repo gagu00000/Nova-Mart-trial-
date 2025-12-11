@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
 from datetime import datetime
+import os
 
 # Page configuration
 st.set_page_config(
@@ -39,10 +40,20 @@ st.markdown("""
 def load_data():
     """Load all CSV files"""
     try:
-        customers = pd.read_csv('customers.csv')
-        products = pd.read_csv('products.csv')
-        engagement = pd.read_csv('engagement_data.csv')
-        geography = pd.read_csv('geography.csv')
+        # Try to load from current directory first
+        if os.path.exists('customers.csv'):
+            customers = pd.read_csv('customers.csv')
+            products = pd.read_csv('products.csv')
+            engagement = pd.read_csv('engagement_data.csv')
+            geography = pd.read_csv('geography.csv')
+        # Try data folder
+        elif os.path.exists('data/customers.csv'):
+            customers = pd.read_csv('data/customers.csv')
+            products = pd.read_csv('data/products.csv')
+            engagement = pd.read_csv('data/engagement_data.csv')
+            geography = pd.read_csv('data/geography.csv')
+        else:
+            return None, None, None, None
         
         # Convert date columns
         if 'engagement_date' in engagement.columns:
@@ -53,8 +64,60 @@ def load_data():
         st.error(f"Error loading data: {e}")
         return None, None, None, None
 
-# Load the data
+# Check if files exist, if not show upload interface
+def check_and_upload_files():
+    """Check if CSV files exist, otherwise provide upload interface"""
+    
+    files_exist = os.path.exists('customers.csv') or os.path.exists('data/customers.csv')
+    
+    if not files_exist:
+        st.warning("⚠️ CSV files not found. Please upload your data files.")
+        
+        st.markdown("### 📁 Upload Your Data Files")
+        st.info("Please upload all four CSV files: customers.csv, products.csv, engagement_data.csv, and geography.csv")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            customers_file = st.file_uploader("Upload customers.csv", type=['csv'], key='customers')
+            products_file = st.file_uploader("Upload products.csv", type=['csv'], key='products')
+        
+        with col2:
+            engagement_file = st.file_uploader("Upload engagement_data.csv", type=['csv'], key='engagement')
+            geography_file = st.file_uploader("Upload geography.csv", type=['csv'], key='geography')
+        
+        if customers_file and products_file and engagement_file and geography_file:
+            try:
+                customers = pd.read_csv(customers_file)
+                products = pd.read_csv(products_file)
+                engagement = pd.read_csv(engagement_file)
+                geography = pd.read_csv(geography_file)
+                
+                # Convert date columns
+                if 'engagement_date' in engagement.columns:
+                    engagement['engagement_date'] = pd.to_datetime(engagement['engagement_date'])
+                
+                st.success("✅ All files uploaded successfully!")
+                return customers, products, engagement, geography
+            except Exception as e:
+                st.error(f"Error reading uploaded files: {e}")
+                return None, None, None, None
+        else:
+            st.info("👆 Please upload all four CSV files to continue.")
+            return None, None, None, None
+    
+    return None, None, None, None
+
+# Try to load data from files
 customers, products, engagement, geography = load_data()
+
+# If files don't exist, show upload interface
+if customers is None:
+    uploaded_data = check_and_upload_files()
+    if uploaded_data[0] is not None:
+        customers, products, engagement, geography = uploaded_data
+    else:
+        st.stop()
 
 # Sidebar
 st.sidebar.title("📊 Navigation")
@@ -68,11 +131,6 @@ st.sidebar.info("**Marketing Campaign Dashboard**\n\nAnalyze customer behavior, 
 
 # Main title
 st.title("🎯 Marketing Campaign Analytics Dashboard")
-
-# Check if data loaded successfully
-if customers is None:
-    st.error("Failed to load data. Please check if all CSV files are present.")
-    st.stop()
 
 # Merge datasets for comprehensive analysis
 @st.cache_data
@@ -221,7 +279,7 @@ elif page == "Customer Analysis":
         avg_revenue = filtered_df.groupby('customer_id')['revenue'].sum().mean()
         st.metric("Avg Revenue/Customer", f"${avg_revenue:.2f}")
     with col3:
-        loyalty_rate = (filtered_customers['loyalty_status'] == 'Loyal').sum() / len(filtered_customers) * 100
+        loyalty_rate = (filtered_customers['loyalty_status'] == 'Loyal').sum() / len(filtered_customers) * 100 if len(filtered_customers) > 0 else 0
         st.metric("Loyalty Rate", f"{loyalty_rate:.1f}%")
     with col4:
         avg_age = filtered_customers['age'].mean()
