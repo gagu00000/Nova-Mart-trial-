@@ -1,46 +1,40 @@
-# 📊 Marketing Campaign Analytics Dashboard
+# 📊 Marketing Analytics Dashboard
 
-A comprehensive Streamlit dashboard for analyzing marketing campaign performance, customer behavior, product metrics, and ROI across multiple channels and geographic regions.
+A comprehensive, eye-pleasing Streamlit dashboard for analyzing marketing campaigns, customer behavior, product sales, and ML-driven insights across multiple channels and geographic regions.
+
+![Dashboard Preview](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)
 
 ## 🎯 Features
 
-### 1. **Overview Page**
-- Executive summary with key metrics
-- Revenue trends over time
-- Customer segmentation analysis
-- Channel performance comparison
+### 📊 **9 Comprehensive Dashboards**
 
-### 2. **Customer Analysis**
-- Demographic filtering (income level, age group, loyalty status)
-- Customer lifetime value analysis
-- Age distribution and revenue by age group
-- Loyalty status breakdown
+1. **🏠 Overview** - Executive summary with key metrics and trends
+2. **📈 Campaign Performance** - Detailed campaign analytics and ROI
+3. **🎯 Customer Analytics** - Customer segmentation and lifetime value
+4. **🛍️ Product Sales** - Product performance and category analysis
+5. **🌍 Geographic Insights** - Regional and country-level performance
+6. **🔄 Customer Journey** - Touchpoint analysis and conversion paths
+7. **📊 Channel Attribution** - Multi-channel attribution modeling
+8. **🎓 ML Insights** - Feature importance and model performance
+9. **🔍 Lead Scoring** - AI-powered lead quality assessment
 
-### 3. **Product Performance**
-- Product category analysis
-- Price range filtering
-- Top performing products table
-- Price vs revenue correlation
-- Category performance metrics
+### 🎨 **Eye-Pleasing Design**
+- Modern gradient backgrounds
+- Smooth animations and transitions
+- Professional color schemes
+- Responsive layout
+- Interactive visualizations
+- Custom styled components
 
-### 4. **Engagement Insights**
-- Engagement trends over time
-- Channel-wise engagement distribution
-- Conversion rate analysis
-- Hourly and daily engagement patterns
-
-### 5. **Geographic Analysis**
-- Regional revenue distribution
-- Country-level performance metrics
-- Customer distribution by region
-- Revenue heatmap visualization
-
-### 6. **Campaign ROI**
-- Overall ROI calculation
-- ROI by marketing channel
-- ROI by product category and customer segment
-- Cost-benefit analysis
-- Monthly ROI trends
+### 📈 **Advanced Analytics**
+- Real-time KPI tracking
+- Predictive analytics
+- Correlation analysis
+- Funnel visualization
+- Geographic heatmaps
+- Time-series analysis
 
 ## 🚀 Getting Started
 
@@ -52,5 +46,5 @@ A comprehensive Streamlit dashboard for analyzing marketing campaign performance
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/marketing-dashboard.git
-cd marketing-dashboard
+git clone https://github.com/yourusername/marketing-analytics-dashboard.git
+cd marketing-analytics-dashboard
