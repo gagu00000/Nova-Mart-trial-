@@ -1,11 +1,3 @@
-# Add after imports
-import warnings
-warnings.filterwarnings('ignore')
-
-# Reduce plotly file size
-import plotly.io as pio
-pio.templates.default = "plotly_white"
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -643,4 +635,3 @@ elif page == "🔍 Lead Scoring":
 st.markdown("---")
 st.markdown("<p style='text-align: center; color: white;'>Marketing Analytics Dashboard | Built with Streamlit</p>", 
             unsafe_allow_html=True)
-
